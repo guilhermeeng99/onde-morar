@@ -509,6 +509,27 @@ body.cmp-open{overflow:hidden}
   .dethead-r{margin-left:0;width:100%}
   .cmptray{bottom:72px}
 }
+/* custo e calculadora */
+.blk-wide{grid-column:1/-1}
+.blk.warmish{background:none}
+.calc{grid-column:1/-1;border-top:2px solid var(--ink);padding-top:14px;margin-top:8px}
+.calc h3{font-size:24px;margin-bottom:4px}
+.calc h4{font:500 18px var(--dp-typography-display);margin:14px 0 6px}
+.calc-hint{color:var(--ink-2);font-size:var(--dp-typography-caption);margin:0 0 12px;max-width:760px}
+.calc-grid{display:grid;grid-template-columns:minmax(260px,380px) 1fr;gap:28px}
+.calc-in{display:grid;gap:8px}
+.cf{display:grid;grid-template-columns:1fr 150px;gap:10px;align-items:center;font-size:var(--dp-typography-control);color:var(--ink-2)}
+.cin{display:flex;align-items:center;gap:6px}
+.cin input{width:100%;border:1.5px solid var(--hair);background:#fbf6ec;border-radius:12px 8px 14px 6px;padding:7px 10px;font:500 14px var(--dp-typography-reading);color:var(--ink);font-variant-numeric:tabular-nums}
+.cin em{font-style:normal;font-size:12px;color:var(--ink-3);white-space:nowrap}
+.calc-out{background:var(--dp-color-surface);border:1px solid var(--hair);border-radius:24px 14px 28px 12px;padding:14px 18px}
+.co-row{display:flex;justify-content:space-between;gap:14px;padding:7px 0;border-top:1px solid var(--hair);font-size:var(--dp-typography-reading-small)}
+.co-row:first-child{border-top:0}
+.co-row b{font-variant-numeric:tabular-nums;white-space:nowrap}
+.co-row b.neg{color:var(--bad)}
+.co-verd{margin:10px 0 0;font-size:var(--dp-typography-reading-small);color:var(--ink-2)}
+.co-verd.ok{color:var(--good)} .co-verd.no{color:var(--bad)}
+@media (max-width:860px){.calc-grid{grid-template-columns:1fr}.cf{grid-template-columns:1fr 130px}}
 </style>
 </head>
 <body>
@@ -580,12 +601,14 @@ body.cmp-open{overflow:hidden}
   <div class="sec-head"><div><h2>Fontes dos dados</h2></div></div>
   <div class="note fontes"><ul>
     <li><b>Mortes violentas</b>: SIM/DataSUS, óbitos por local de residência, 2022 a 2024. Fator de homicídios ocultos (35% das mortes de causa indeterminada) do Atlas da Violência 2026 (Ipea/FBSP).</li>
-    <li><b>Roubos e furtos</b>: secretarias estaduais de segurança, últimos 12 meses disponíveis. SSP-SP, SEJUSP-MG, ISP-RJ, SSP-RS, SESP-ES, SEGUP-PA, SESDEC-RO, SEJUSP-AC, SSPDS-CE, SSP-TO e SEJUSP-AP (roubo e furto); SDS-PE, SSP-BA (2025) e SSP-AM (só roubo).</li>
+    <li><b>Roubos e furtos</b>: roubo total por estado do Anuário Brasileiro de Segurança Pública 2026 (FBSP, ano 2025), usado como régua nacional; dados por cidade das secretarias estaduais de segurança, últimos 12 meses disponíveis. SSP-SP, SEJUSP-MG, ISP-RJ, SSP-RS, SESP-ES, SEGUP-PA, SESDEC-RO, SEJUSP-AC, SSPDS-CE, SSP-TO e SEJUSP-AP (roubo e furto); SDS-PE, SSP-BA (2025) e SSP-AM (só roubo).</li>
     <li><b>População</b>: IBGE, estimativa 2026.</li>
     <li><b>Clima</b>: INMET, normais climatológicas 1991-2020.</li>
     <li><b>Saúde</b>: leitos do CNES (set/2026) e cobertura de planos da ANS (ago/2026).</li>
     <li><b>Saneamento e ruas</b>: Censo 2022 (IBGE) e SINISA 2024 (Ministério das Cidades).</li>
     <li><b>Emprego</b>: IBGE, Cadastro Central de Empresas 2024, e Novo Caged, set/2025 a ago/2026 (Ministério do Trabalho).</li>
+    <li><b>Preços de imóvel</b>: anúncios do ZAP Imóveis (Imovelweb em Varginha e Lavras; os dois em Tubarão), coletados em 24/10/2026. São preços pedidos, não preços fechados.</li>
+    <li><b>Juros e rendimento</b>: Banco Central, Selic 13,75%, CDI 13,65% (out/2026) e taxa média do financiamento imobiliário com taxas reguladas, 10,91% ao ano (ago/2026).</li>
     <li><b>Fotos e textos</b>: Wikipédia e Wikimedia Commons.</li>
   </ul></div>
 </section>
@@ -593,7 +616,7 @@ body.cmp-open{overflow:hidden}
 <div class="cmptray" id="cmptray" hidden><div class="cmptray-in"><span class="cmptray-l" id="cmpcount">Comparar:</span><span id="cmpchips" class="cmpchips"></span><button class="pill-s" type="button" id="cmpgo">Comparar</button><button class="ghost-s" type="button" id="cmpclear">Limpar</button></div></div>
 <dialog class="det cmpd" id="cmp" aria-label="Comparar cidades"><div class="dethead"><button class="backbtn" type="button" id="cmpx" aria-label="Voltar para a lista de cidades"><span aria-hidden="true">←</span> Voltar</button><h2 id="cmpt" tabindex="-1">Comparar cidades</h2><span class="dethead-r"><span class="search cmpadd"><input id="cmpq" type="search" placeholder="Adicionar cidade" autocomplete="off" aria-label="Adicionar cidade à comparação"><span id="cmpsugg" class="sugg" role="listbox"></span></span></span></div><div class="cmpwrap" id="cmpc"></div></dialog>
 <div class="closing-forms" aria-hidden="true"><span class="f1"></span><span class="f2"></span><span class="f3"></span><span class="f4"></span></div>
-<footer class="foot-stone">Análise pessoal de cidades para morar, feita com dados públicos oficiais. Atualizado em 24/10/2026. Não é recomendação profissional.</footer>
+<footer class="foot-stone">Análise pessoal de cidades para morar, feita com dados públicos oficiais e anúncios de imóveis. Atualizado em 24/10/2026. Não é recomendação profissional.</footer>
 </div>
 
 <script>
@@ -609,9 +632,17 @@ const POPS = [['lt100','Menos de 100 mil',0,100000],['100','100 a 200 mil',10000
 const CRIT = [
   ['seg','Segurança','Segurança'],
   ['saude','Saúde','Infraestrutura'],['san','Saneamento','Infraestrutura'],['urb','Urbanização','Infraestrutura'],
+  ['custo','Custo','Custo'],
   ['clima','Clima','Extras'],['emp','Emprego','Extras'],
 ];
-const DEFW = {seg:50,saude:20,san:10,urb:10,clima:5,emp:5};
+const DEFW = {seg:45,saude:18,san:9,urb:9,custo:10,clima:4.5,emp:4.5};
+// preços de imóvel (anúncios ZAP Imóveis e Imovelweb, 24/10/2026): só para as cidades levantadas
+const PRECO = {"3507506": {"fonte": "ZAP", "data": "2026-10-24", "an": 112, "am": 2200, "a25": 1800, "a75": 2974, "a3": 79, "cn": 371, "cm": 650000, "c25": 449670, "c5": 119, "m2": 3750}, "4218707": {"fonte": "ZAP + Imovelweb", "data": "2026-10-24", "an": 34, "am": 2636, "a25": 2187, "a75": 3397, "a3": 71, "cn": 126, "cm": 980000, "c25": 598000, "c5": 22, "m2": 5000}, "3503208": {"fonte": "ZAP", "data": "2026-10-24", "an": 599, "am": 1504, "a25": 1201, "a75": 2033, "a3": 92, "cn": 2223, "cm": 395000, "c25": 320000, "c5": 1175, "m2": 2331}, "3507605": {"fonte": "ZAP", "data": "2026-10-24", "an": 103, "am": 2950, "a25": 2300, "a75": 3850, "a3": 56, "cn": 916, "cm": 699650, "c25": 595750, "c5": 65, "m2": 4963}, "3545209": {"fonte": "ZAP", "data": "2026-10-24", "an": 88, "am": 3000, "a25": 2312, "a75": 3920, "a3": 58, "cn": 1206, "cm": 600000, "c25": 450000, "c5": 205, "m2": 4145}, "3170701": {"fonte": "Imovelweb", "data": "2026-10-24", "an": 38, "am": 1742, "a25": 1238, "a75": 4025, "a3": 62, "cn": 641, "cm": 790000, "c25": 550000, "c5": 130, "m2": 3000}, "3504107": {"fonte": "ZAP", "data": "2026-10-24", "an": 312, "am": 3500, "a25": 2596, "a75": 4444, "a3": 35, "cn": 3150, "cm": 784170, "c25": 650000, "c5": 95, "m2": 6154}, "3545803": {"fonte": "ZAP", "data": "2026-10-24", "an": 234, "am": 2168, "a25": 1800, "a75": 3052, "a3": 74, "cn": 1779, "cm": 499500, "c25": 400000, "c5": 521, "m2": 3395}, "3520509": {"fonte": "ZAP", "data": "2026-10-24", "an": 559, "am": 3250, "a25": 2668, "a75": 4540, "a3": 41, "cn": 6393, "cm": 755000, "c25": 669962, "c5": 154, "m2": 5727}, "3138203": {"fonte": "Imovelweb", "data": "2026-10-24", "an": 30, "am": 1680, "a25": 1585, "a75": 1780, "a3": 100, "cn": 167, "cm": 610000, "c25": 450000, "c5": 59, "m2": 2975}, "3556206": {"fonte": "ZAP", "data": "2026-10-24", "an": 225, "am": 3160, "a25": 2752, "a75": 4852, "a3": 41, "cn": 1906, "cm": 806000, "c25": 680000, "c5": 47, "m2": 4494}, "3529005": {"fonte": "ZAP", "data": "2026-10-24", "an": 479, "am": 2114, "a25": 1600, "a75": 2800, "a3": 79, "cn": 1839, "cm": 450000, "c25": 360000, "c5": 800, "m2": 2850}, "4204608": {"fonte": "ZAP", "data": "2026-10-24", "an": 121, "am": 2260, "a25": 1758, "a75": 3018, "a3": 74, "cn": 270, "cm": 849000, "c25": 520000, "c5": 67, "m2": 4750}, "4211900": {"fonte": "ZAP", "data": "2026-10-24", "an": 596, "am": 2800, "a25": 2203, "a75": 3499, "a3": 58, "cn": 2116, "cm": 699000, "c25": 586098, "c5": 136, "m2": 6533}, "3547304": {"fonte": "ZAP", "data": "2026-10-24", "an": 238, "am": 8064, "a25": 6396, "a75": 10279, "a3": 7, "cn": 1219, "cm": 1300000, "c25": 984730, "c5": 18, "m2": 8277}, "2927408": {"fonte": "ZAP", "data": "2026-10-24", "an": 1189, "am": 3500, "a25": 2628, "a75": 4500, "a3": 39, "cn": 739, "cm": 598000, "c25": 370000, "c5": 187, "m2": 3881}, "2933307": {"fonte": "ZAP", "data": "2026-10-24", "an": 60, "am": 1880, "a25": 1498, "a75": 2316, "a3": 88, "cn": 423, "cm": 375000, "c25": 280000, "c5": 258, "m2": 3857}, "3525904": {"fonte": "ZAP", "data": "2026-10-24", "an": 821, "am": 3279, "a25": 2800, "a75": 3923, "a3": 40, "cn": 5433, "cm": 780000, "c25": 692000, "c5": 200, "m2": 4631}, "3548807": {"fonte": "ZAP", "data": "2026-10-24", "an": 785, "am": 4164, "a25": 3466, "a75": 4978, "a3": 12, "cn": 4245, "cm": 1001000, "c25": 850000, "c5": 4, "m2": 5565}};
+const FIN = {juros: 11.5, cdi: 13.65, selic: 13.75, itbi: 3, cartorio: 1.5, prazo: 30, economias: 200000, gasto: 6000, meses: 6, renda: 12000};
+function custoParts(c){
+  const p = PRECO[c.cod]; if (!p) return null;
+  return {al: clamp(100*(4000 - p.am)/2500), casa: clamp(100*(900000 - p.cm)/550000), p};
+}
 
 const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 const col = r => css(REG[r] || '--warn');
@@ -625,12 +656,21 @@ const mean = xs => { const v = xs.filter(x=>x!=null); return v.length ? v.reduce
 
 // segurança: 70% mortes violentas estimadas (homicídios + intervenção policial + 35% das indeterminadas)
 // e 30% roubo e furto comparados à média do próprio estado (quando o estado publica por município)
+// roubo total por 100 mil habitantes em cada estado, régua padronizada do Anuário Brasileiro de Segurança Pública 2026 (ano 2025)
+const UFROUBO = {"AC": 269.7, "AL": 188.1, "AP": 423.9, "AM": 446.5, "BA": 283.1, "CE": 300.4, "DF": 399.1, "ES": 334.3, "GO": 85.3, "MA": 366.3, "MT": 88.4, "MS": 90.3, "MG": 61.8, "PA": 341.8, "PB": 164.1, "PR": 124.6, "PE": 413.0, "PI": 310.6, "RJ": 571.7, "RN": 283.3, "RS": 164.5, "RO": 384.3, "RR": 180.8, "SC": 60.1, "SP": 404.4, "SE": 171.6, "TO": 84.1};
+// roubo padronizado da cidade: (roubo da cidade ÷ média do estado na secretaria) × roubo total do estado no Anuário.
+// Sem dado municipal, usa a média do estado (estimativa).
+function roubStd(c){
+  const uf = UFROUBO[c.uf]; if (uf == null) return null;
+  return c.rrel != null ? {v: c.rrel*uf, est: false} : {v: uf, est: true};
+}
+const roubNota = r => clamp(100*(1 - r/400));
 function segScore(c){
   const v = c.mv!=null ? c.mv : c.hom;
   if (v==null) return 50;
   const m = clamp(100*(1 - v/30));
-  const rel = mean([c.rrel, c.frel]);
-  return rel==null ? m : 0.7*m + 0.3*clamp(100*(1.5 - rel)/1.25);
+  const r = roubStd(c);
+  return r==null ? m : 0.7*m + 0.3*roubNota(r.v);
 }
 // sub-notas de 0 a 100 (mesma régua para candidatas e referências)
 function subs(c){
@@ -641,6 +681,7 @@ function subs(c){
     urb: mean([c.calcada,c.ilum,c.arbor].map(v=>v==null?null:clamp(v))) ?? 50,
     clima: c.tmax==null ? 50 : clamp(100*(32 - c.tmax)/6),
     emp: mean(EMP.parts.map(([k,a,b]) => lin(c.emp ? c.emp[k] : null, a, b))) ?? 50,
+    custo: (() => { const k = custoParts(c); return k ? (k.al + k.casa)/2 : 50; })(),
   };
 }
 [...DATA, ...REFS].forEach(c => { c.ps = subs(c); });
@@ -669,8 +710,7 @@ function flags(c){
   if (c.pop < 80000) f.push(['Cidade pequena (' + fmtInt(c.pop/1000) + ' mil)', 0]);
   if (c.esgoto < 60) f.push(['Esgoto em rede: ' + fmt(c.esgoto,0) + '%', 0]);
   if (c.mv!=null && c.hom!=null && c.mv - c.hom > 2) f.push(['Muitas mortes de causa indeterminada', 0]);
-  if (c.rrel==null) f.push(['Sem dado de roubo e furto', 0]);
-  else { const r = mean([c.rrel,c.frel]); if (r >= 1) f.push(['Roubo e furto acima da média do estado', 0]); else if (r <= 0.5) f.push(['Pouco roubo e furto para o estado', 1]); }
+  { const r = roubStd(c); if (r) { if (r.est) f.push(['Roubo estimado pela média do estado', 0]); if (r.v >= 200) f.push(['Muito roubo', 0]); else if (r.v <= 60) f.push(['Pouco roubo', 1]); } }
   if (c.leitos < 1) f.push(['Poucos leitos', 0]);
   if (c.tmax == null) f.push(['Clima sem dado (nota neutra)', 0]);
   if (c.tfria != null && c.tfria <= 14) f.push(['Inverno frio de verdade', 1]);
@@ -835,15 +875,16 @@ function calcTip(t, c){
   const fim = v => `<p class="res">Nota: ${n0(v)} de 100</p>`;
   const media = f => mean(DATA.map(f));
   if (t === 'Segurança'){
-    const v = c.mv ?? c.hom, m = clamp(100*(1 - v/30)), rel = mean([c.rrel, c.frel]);
+    const v = c.mv ?? c.hom, m = clamp(100*(1 - v/30)), rs = roubStd(c);
     const comp = v <= media(x=>x.mv) ? 'abaixo da média das candidatas' : 'acima da média das candidatas';
     let it = item(`<b>Mortes violentas:</b> ${fmt(v)} a cada 100 mil moradores por ano, ${comp}.`, m);
     const eqM = v >= 30 ? `Mortes: ${fmt(v)} passa do limite de 30, então vale 0` : `Mortes: (30 − ${fmt(v)}) ÷ 30 × 100 = ${n0(m)}`;
     let eq;
-    if (rel == null) { it += `<li><b>Roubos e furtos:</b> o estado não divulga por cidade, então só as mortes contam.</li>`; eq = conta(eqM, `Segurança = ${n0(m)} (só as mortes)`); }
-    else { const pp = clamp(100*(1.5 - rel)/1.25); const r = Math.round(100*rel); it += item(`<b>Roubos e furtos:</b> ${r < 100 ? `${100-r}% a menos que a média do estado` : r === 100 ? 'iguais à média do estado' : `${r-100}% a mais que a média do estado`}.`, pp);
-      eq = conta(eqM, `Roubos e furtos: ${fmt(100*rel,0)}% da média do estado vira ${n0(pp)}`, `Segurança = 70% × ${n0(m)} + 30% × ${n0(pp)} = <b>${n0(0.7*m + 0.3*pp)}</b>`); }
-    return `<p>Olha principalmente quantas pessoas morrem de forma violenta (é o que mais pesa) e, em segundo lugar, quantos roubos e furtos acontecem. ${vale('seg')}</p><ul>${it}</ul>${eq}${fim(c.ps.seg)}`;
+    if (rs == null) { it += `<li><b>Roubos:</b> sem dado para este estado, então só as mortes contam.</li>`; eq = conta(eqM, `Segurança = ${n0(m)} (só as mortes)`); }
+    else { const pp = roubNota(rs.v);
+      it += item(`<b>Roubos:</b> ${rs.est ? `cerca de ${n0(rs.v)} a cada 100 mil moradores por ano (média do estado, porque ele não divulga por cidade)` : `${n0(rs.v)} a cada 100 mil moradores por ano`}.`, pp);
+      eq = conta(eqM, rs.v >= 400 ? `Roubos: ${n0(rs.v)} passa do limite de 400, então vale 0` : `Roubos: (400 − ${n0(rs.v)}) ÷ 400 × 100 = ${n0(pp)}`, `Segurança = 70% × ${n0(m)} + 30% × ${n0(pp)} = <b>${n0(0.7*m + 0.3*pp)}</b>`); }
+    return `<p>Olha principalmente quantas pessoas morrem de forma violenta (é o que mais pesa) e, em segundo lugar, quantos roubos acontecem, numa régua igual para o país todo. ${vale('seg')}</p><ul>${it}</ul>${eq}${fim(c.ps.seg)}`;
   }
   if (t === 'Infraestrutura'){
     const lei = c.leitos==null?null:clamp(100*c.leitos/4), pla = c.planos==null?null:clamp(100*c.planos/60);
@@ -871,6 +912,15 @@ function calcTip(t, c){
       ${item(`<b>Vagas no último ano:</b> ${cg==null?'sem dado':Math.abs(cg) < 1 ? 'praticamente não abriu nem fechou vagas' : cg > 0 ? `abriu ${n0(cg)} vagas a cada mil moradores` : `fechou ${n0(-cg)} vagas a cada mil moradores`}.`, a[2])}
     </ul>${(() => { const ok = a.filter(x=>x!=null); return conta(`Emprego = (${ok.map(n0).join(' + ')}) ÷ ${ok.length} = <b>${n0(c.ps.emp)}</b>`); })()}${fim(c.ps.emp)}`;
   }
+  if (t === 'Custo'){
+    const k = custoParts(c);
+    if (!k) return `<p>Olha quanto custa morar: aluguel de 2 quartos e preço de casa de 3 quartos. ${vale('custo')}</p><ul><li>Ainda não levantei preço para esta cidade, então a nota fica neutra.</li></ul>${fim(50)}`;
+    const p = k.p;
+    return `<p>Olha quanto custa morar: o aluguel de um 2 quartos e o preço de uma casa de 3 quartos, pelos anúncios. ${vale('custo')}</p><ul>
+      ${item(`<b>Aluguel:</b> cerca de R$ ${fmtInt(p.am)} por mês, com condomínio e IPTU.`, k.al)}
+      ${item(`<b>Casa de 3 quartos:</b> cerca de R$ ${fmtInt(p.cm/1000)} mil.`, k.casa)}
+    </ul>${conta(`Aluguel: (4.000 − ${fmtInt(p.am)}) ÷ 2.500 × 100 = ${n0(k.al)}`, `Casa: (900 mil − ${fmtInt(p.cm/1000)} mil) ÷ 550 mil × 100 = ${n0(k.casa)}`, `Custo = (${n0(k.al)} + ${n0(k.casa)}) ÷ 2 = <b>${n0(c.ps.custo)}</b>`, '<small>Aluguel: R$ 1.500 ou menos vale 100; R$ 4.000 ou mais vale 0. Casa: R$ 350 mil ou menos vale 100; R$ 900 mil ou mais vale 0.</small>')}${fim(c.ps.custo)}`;
+  }
   return `<p>O tamanho da cidade <b>não entra na nota</b>. Ele só serve para o filtro de tamanho da barra lateral.</p>`;
 }
 function infra(c){
@@ -883,7 +933,8 @@ function blk(lab, v, det, tone){
 function ccard(c){
   const w = c.wiki || {}, e = c.emp || {};
   const rel = mean([c.rrel, c.frel]);
-  const segDet = `${fmt(c.mv ?? c.hom)} mortes/100 mil` + (rel==null ? ' · sem dado de roubo' : ` · roubo e furto ${fmt(100*rel,0)}% do estado`);
+  const rs = roubStd(c);
+  const segDet = `${fmt(c.mv ?? c.hom)} mortes/100 mil` + (rs==null ? ' · sem dado de roubo' : ` · ${rs.est?'~':''}${fmt(rs.v,0)} roubos/100 mil`);
   const infDet = `${fmt(c.leitos)} leitos/mil · esgoto ${fmt(c.esgoto,0)}%`;
   const cliDet = `verão ${c.tmax==null?'n/d':fmt(c.tmax,0)+' °C'} · inverno ${c.tfria==null?'n/d':fmt(c.tfria,0)+' °C'}`;
   const empDet = `${e.ocupados_pct_pop==null?'n/d':fmt(e.ocupados_pct_pop,0)} empregos/100 hab. · ${e.salario_medio_sm==null?'n/d':fmt(e.salario_medio_sm,1)+' SM'}`;
@@ -896,6 +947,7 @@ function ccard(c){
       ${blk('Infraestrutura', infra(c), infDet, 'support')}
       ${blk('Clima', c.ps.clima, cliDet, 'warm')}
       ${blk('Emprego', c.ps.emp, empDet, 'compare')}
+      ${(() => { const k = custoParts(c); return `<div class="blk-wide">${blk('Custo', c.ps.custo, k ? `aluguel ~R$ ${fmtInt(k.p.am)} · casa ~R$ ${fmtInt(k.p.cm/1000)} mil` : 'preço ainda não levantado', 'warmish')}</div>`; })()}
     </div>
     <div class="cfoot"><span>${fmtInt(c.pop/1000)} mil habitantes</span><span class="cfoot-r">${cmpBtn(c.cod)}<span class="more">Ver detalhes ›</span></span></div>
   </article>`;
@@ -919,8 +971,11 @@ function explain(c){
     grp('Segurança', c.ps.seg, [
       row('Mortes violentas estimadas', fmt(c.mv)+'<small style="font-weight:400"> /100 mil</small>', 'Homicídios + mortes por intervenção policial + 35% das mortes de "causa indeterminada" (que costumam esconder homicídios), por 100 mil habitantes por ano, média 2022 a 2024. Zero vale 100; 30 ou mais vale 0. O limite de vocês é 10.', ref(x=>x.mv)+' Salvador: '+fmt(SAL.mv)+'.'),
       row('Homicídios registrados', fmt(c.hom), 'Só as mortes classificadas como homicídio. Se for bem menor que a linha de cima, muitas mortes ficaram sem causa definida.', ref(x=>x.hom)),
-      row('Roubos', c.rrel==null?'n/d':pct(100*c.rrel), c.rrel==null ? 'Sem roubo por município para este estado: ou ele não publica (SC, PR, GO, MT, MA, SE, entre outros) ou o site estava fora do ar (RN). A nota usa só as mortes.' : `Roubos registrados nos últimos 12 meses, em % da média do próprio estado. 100% é igual à média; 50% é metade. Por 100 mil: ${fmt(c.roubo,0)}.`, c.rrel==null?'':'Só dá para comparar com cidades do mesmo estado: cada secretaria registra de um jeito.'),
-      row('Furtos', c.frel==null?'n/d':pct(100*c.frel), c.frel==null ? 'Sem dado por município neste estado.' : `Furtos registrados nos últimos 12 meses, em % da média do estado. Por 100 mil: ${fmt(c.furto,0)}.`, c.frel==null?'':'Furto é muito subnotificado: muita gente não registra.'),
+      ...(() => { const r = roubStd(c); return [row('Roubos por 100 mil', r==null?'n/d':(r.est?'~':'')+fmt(r.v,0),
+        r==null ? 'Sem dado de roubo para este estado.' : r.est ? `O estado não divulga roubo por cidade. Usei a média do estado (${fmt(UFROUBO[c.uf],0)} por 100 mil, Anuário Brasileiro de Segurança Pública 2026). É uma estimativa.` : `Roubos registrados nos últimos 12 meses, padronizados para uma régua igual em todo o país (Anuário Brasileiro de Segurança Pública 2026). Na régua, 0 vale 100 e 400 ou mais vale 0.`,
+        r==null ? '' : `Média das candidatas: ${fmt(mean(DATA.map(x=>{const q=roubStd(x);return q&&q.v;})),0)}. Média do estado: ${fmt(UFROUBO[c.uf],0)}.`)]; })(),
+      row('Roubos vs. estado', c.rrel==null?'n/d':pct(100*c.rrel), c.rrel==null ? 'Sem dado por município neste estado.' : 'Roubos da cidade em % da média do próprio estado. Só informação: a nota usa o número padronizado acima.'),
+      row('Furtos vs. estado', c.frel==null?'n/d':pct(100*c.frel), c.frel==null ? 'Sem dado por município neste estado.' : `Furtos em % da média do estado (por 100 mil: ${fmt(c.furto,0)}). Só informação: não há régua nacional de furto, então não entra na nota.`, c.frel==null?'':'Furto é muito subnotificado: muita gente não registra.'),
       ...(c.fres!=null ? [row('Furtos em residência', fmt(c.fres,0), 'Furtos em casa ou condomínio residencial por 100 mil habitantes, 12 meses (microdados da SSP-SP).', ref(x=>x.fres,0))] : []),
     ]),
     grp('Infraestrutura', infra(c), [
@@ -942,17 +997,83 @@ function explain(c){
       row('Salário médio', e.salario_medio_sm==null?'n/d':fmt(e.salario_medio_sm,1)+' SM', 'Salário médio mensal dos empregos formais, em salários mínimos (IBGE 2024). 1,8 vale 0; 3,5 ou mais vale 100.', ref(x=>(x.emp||{}).salario_medio_sm,1,' SM')),
       row('Vagas novas em 12 meses', e.caged_saldo_por_mil==null?'n/d':fmt(e.caged_saldo_por_mil)+' por mil', 'Saldo de empregos com carteira (contratações menos demissões) de set/2025 a ago/2026, por mil habitantes (Novo Caged). -10 vale 0; +15 ou mais vale 100.'),
     ]),
+    grp('Custo', c.ps.custo, (() => { const k = custoParts(c); if (!k) return [row('Preços', 'n/d', 'Ainda não levantei preço de imóvel para esta cidade. A nota de custo fica neutra (50).')]; const p = k.p; return [
+      row('Aluguel de 2 quartos', 'R$ '+fmtInt(p.am), `Custo típico do mês (mediana): aluguel + condomínio + IPTU, apartamentos e casas de 2 quartos. Metade dos anúncios fica entre R$ ${fmtInt(p.a25)} e R$ ${fmtInt(p.a75)}.`, `${p.an} anúncios; ${p.a3}% cabem em R$ 3.000. Fonte: ${p.fonte}, ${p.data.split('-').reverse().join('/')}.`),
+      row('Casa de 3 quartos', 'R$ '+fmtInt(p.cm/1000)+' mil', `Preço típico pedido (mediana) das casas de 3 quartos à venda. Um quarto delas custa até R$ ${fmtInt(p.c25/1000)} mil.`, `${p.cn} casas anunciadas; cerca de ${fmtInt(p.c5)} até R$ 500 mil.`),
+      row('Preço por m²', 'R$ '+fmtInt(p.m2), 'Preço por metro quadrado das casas de 3 quartos (mediana).'),
+    ]; })()),
     grp('População', null, [
       row('Habitantes', fmtInt(c.pop/1000)+' mil', 'Estimativa do IBGE para 2026. A preferência de vocês é cidade média, de 100 a 500 mil; menores também entram. Não entra na nota.'),
     ]),
   ].join('');
+}
+// calculadora de compra
+function calcBox(c){
+  const k = custoParts(c);
+  const preco = k ? k.p.cm : 500000, alug = k ? k.p.am : 2500;
+  const f = (id, lab, v, step, suf) => `<label class="cf"><span>${lab}</span><span class="cin"><input type="number" id="cf-${id}" value="${v}" step="${step}" min="0">${suf?`<em>${suf}</em>`:''}</span></label>`;
+  return `<section class="calc" aria-labelledby="calc-t"><h3 id="calc-t">Simular compra em ${esc(c.nome)}</h3>
+    <p class="calc-hint">O preço vem do valor típico da cidade; economias, gasto e renda são <b>valores de exemplo: troque pelos seus</b>. Mude qualquer número e a conta refaz na hora. Juros e rendimento vêm do Banco Central (out/2026); ITBI e cartório variam por cidade.</p>
+    <div class="calc-grid">
+      <div class="calc-in">
+        ${f('preco','Preço da casa (R$)',preco,1000)}
+        ${f('econ','Economias (R$)',FIN.economias,1000)}
+        ${f('gasto','Gasto mensal, sem moradia (R$)',FIN.gasto,100)}
+        ${f('meses','Reserva de emergência (meses)',FIN.meses,1)}
+        ${f('renda','Renda mensal (R$)',FIN.renda,100)}
+        ${f('itbi','ITBI',FIN.itbi,0.5,'%')}
+        ${f('cart','Escritura e registro',FIN.cartorio,0.1,'%')}
+        ${f('juros','Juros do financiamento',FIN.juros,0.1,'% ao ano')}
+        ${f('prazo','Prazo',FIN.prazo,1,'anos')}
+        ${f('alug','Aluguel equivalente (R$/mês)',alug,50)}
+        ${f('cdi','Rendimento do dinheiro (CDI)',FIN.cdi,0.05,'% ao ano')}
+      </div>
+      <div class="calc-out" id="calc-out" aria-live="polite"></div>
+    </div></section>`;
+}
+function bindCalc(c){
+  const ids = ['preco','econ','gasto','meses','renda','itbi','cart','juros','prazo','alug','cdi'];
+  const run = () => {
+    const v = Object.fromEntries(ids.map(i => [i, +document.getElementById('cf-'+i).value || 0]));
+    const custos = v.preco * (v.itbi + v.cart) / 100;
+    const reserva = v.gasto * v.meses;
+    const livre = v.econ - reserva - custos;
+    const R = x => 'R$ ' + fmtInt(x);
+    let html = `<div class="co-row"><span>Custos de compra (ITBI + cartório)</span><b>${R(custos)}</b></div>
+      <div class="co-row"><span>Reserva de ${fmt(v.meses,0)} meses</span><b>${R(reserva)}</b></div>
+      <div class="co-row"><span>Sobra das economias para a casa</span><b class="${livre<0?'neg':''}">${R(livre)}</b></div>`;
+    if (livre >= v.preco) {
+      html += `<p class="co-verd ok">Dá para comprar <b>à vista</b> e ainda sobram ${R(livre - v.preco)} além da reserva.</p>`;
+    } else if (livre <= 0) {
+      html += `<p class="co-verd no">As economias não cobrem a reserva e os custos de compra. Seria preciso juntar mais antes de comprar.</p>`;
+    } else {
+      const fin = v.preco - livre, n = v.prazo * 12, im = Math.pow(1 + v.juros/100, 1/12) - 1;
+      const p1 = fin/n + fin*im, pn = fin/n + (fin/n)*im, juros = fin*im*(n+1)/2;
+      const minEnt = v.preco * 0.2;
+      html += `<div class="co-row"><span>Entrada</span><b>${R(livre)} (${fmt(100*livre/v.preco,0)}%)</b></div>
+        <div class="co-row"><span>Valor financiado</span><b>${R(fin)}</b></div>
+        <div class="co-row"><span>1ª parcela (tabela SAC)</span><b>${R(p1)}</b></div>
+        <div class="co-row"><span>Última parcela</span><b>${R(pn)}</b></div>
+        <div class="co-row"><span>Total de juros (sem amortizar antes)</span><b>${R(juros)}</b></div>
+        <p class="co-verd ${livre < minEnt || p1 > v.renda*0.3 ? 'no' : 'ok'}">${livre < minEnt ? `A entrada fica abaixo dos 20% que os bancos costumam exigir (${R(minEnt)}).` : p1 > v.renda*0.3 ? `A 1ª parcela passa de 30% da renda (${R(v.renda*0.3)}), limite usual dos bancos.` : 'Entrada e parcela dentro dos limites usuais dos bancos.'} Amortizando antes do prazo, os juros caem bastante.</p>`;
+    }
+    const cdiLiq = v.cdi * 0.85, oport = (v.preco + custos) * (Math.pow(1 + cdiLiq/100, 1/12) - 1);
+    html += `<h4>Alugar ou comprar?</h4>
+      <div class="co-row"><span>Aluguel equivalente por mês</span><b>${R(v.alug)}</b></div>
+      <div class="co-row"><span>Quanto o dinheiro da casa renderia por mês aplicado (CDI menos IR)</span><b>${R(oport)}</b></div>
+      <p class="co-verd">${oport > v.alug ? `Hoje, com juros altos, <b>alugar sai mais barato</b> que comprar à vista: o dinheiro aplicado renderia ${R(oport - v.alug)} a mais por mês que o aluguel.` : `Comprar sai mais barato que alugar: o aluguel custa ${R(v.alug - oport)} a mais por mês que o rendimento do dinheiro.`} A conta ignora valorização do imóvel, manutenção e IPTU.</p>`;
+    document.getElementById('calc-out').innerHTML = html;
+  };
+  ids.forEach(i => document.getElementById('cf-'+i).addEventListener('input', run));
+  run();
 }
 function openDetail(cod){
   const c = LOOKUP[cod]; if (!c) return;
   c.nota = score(c); fetchWiki(c);
   document.getElementById('dett').textContent = `${c.nome}/${c.uf}`;
   CURDET = cod; document.getElementById('detcmp').innerHTML = cmpBtn(cod, true);
-  document.getElementById('detc').innerHTML = `<div>${summaryPanel(c)}${card(c)}</div><div class="expl">${explain(c)}</div>`;
+  document.getElementById('detc').innerHTML = `<div>${summaryPanel(c)}${card(c)}</div><div class="expl">${explain(c)}</div>${calcBox(c)}`;
+  bindCalc(c);
   const d = document.getElementById('det');
   if (!d.open) {
     if (d.showModal) d.showModal(); else d.setAttribute('open','');
@@ -994,7 +1115,7 @@ function weightsUI(build){
   if (build) {
     const groups = [...new Set(CRIT.map(c=>c[2]))];
     g.innerHTML = groups.map(gr => `<div class="wgroup"><h3>${gr} <span data-gp="${gr}"></span></h3>${
-      CRIT.filter(c=>c[2]===gr).map(([k,n]) => `<label class="wrow"><span>${n}</span><input type="range" min="0" max="100" step="5" data-k="${k}" value="${state.w[k]}"><b data-p="${k}"></b></label>`).join('')}</div>`).join('');
+      CRIT.filter(c=>c[2]===gr).map(([k,n]) => `<label class="wrow"><span>${n}</span><input type="range" min="0" max="100" step="0.5" data-k="${k}" value="${state.w[k]}"><b data-p="${k}"></b></label>`).join('')}</div>`).join('');
     g.querySelectorAll('input').forEach(i => i.oninput = () => { state.w[i.dataset.k] = +i.value; save(); render(); });
   }
   g.querySelectorAll('input').forEach(i => i.value = state.w[i.dataset.k]);
@@ -1150,7 +1271,7 @@ function renderCmp(){
     ['Nota de segurança', c=>c.ps.seg, v=>fmt(v,0), 'hi', true],
     ['Mortes violentas por 100 mil', c=>c.mv ?? c.hom, v=>fmt(v), 'lo'],
     ['Homicídios registrados por 100 mil', c=>c.hom, v=>fmt(v), 'lo'],
-    ['Roubos (% da média do estado)', c=>c.rrel==null?null:100*c.rrel, v=>v==null?'n/d':fmt(v,0)+'%', 'lo'],
+    ['Roubos por 100 mil (padronizado)', c=>{const r=roubStd(c);return r&&r.v;}, (v,c)=>(roubStd(c).est?'~':'')+fmt(v,0), 'lo'],
     ['Furtos (% da média do estado)', c=>c.frel==null?null:100*c.frel, v=>v==null?'n/d':fmt(v,0)+'%', 'lo'],
     ['g','Infraestrutura'],
     ['Nota de infraestrutura', c=>infra(c), v=>fmt(v,0), 'hi', true],
@@ -1169,6 +1290,12 @@ function renderCmp(){
     ['Empregos formais por 100 hab.', c=>e(c).ocupados_pct_pop, v=>fmt(v,0), 'hi'],
     ['Salário médio (salários mínimos)', c=>e(c).salario_medio_sm, v=>fmt(v,1), 'hi'],
     ['Vagas no último ano, por mil hab.', c=>e(c).caged_saldo_por_mil, v=>v==null?'n/d':(v>0?'+':'')+fmt(v,1), 'hi'],
+    ['g','Custo'],
+    ['Nota de custo', c=>custoParts(c)?c.ps.custo:null, v=>fmt(v,0), 'hi', true, 'sem levantamento'],
+    ['Aluguel de 2 quartos (total/mês)', c=>{const k=custoParts(c);return k&&k.p.am;}, v=>'R$ '+fmtInt(v), 'lo', false, 'sem levantamento'],
+    ['Aluguéis até R$ 3.000', c=>{const k=custoParts(c);return k&&k.p.a3;}, v=>fmt(v,0)+'%', 'hi', false, 'sem levantamento'],
+    ['Casa de 3 quartos (preço típico)', c=>{const k=custoParts(c);return k&&k.p.cm;}, v=>'R$ '+fmtInt(v/1000)+' mil', 'lo', false, 'sem levantamento'],
+    ['Casas até R$ 500 mil (anúncios)', c=>{const k=custoParts(c);return k&&k.p.c5;}, v=>fmtInt(v), 'hi', false, 'sem levantamento'],
     ['g','População'],
     ['Habitantes', c=>c.pop, v=>fmtInt(v/1000)+' mil', null],
   ];
